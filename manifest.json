@@ -1,9 +1,9 @@
 {
-  "id": "life-decision-tree",
-  "name": "人生决策树",
-  "version": "0.1.0",
-  "minAppVersion": "1.11.0",
-  "description": "把碎片经历榨成四类节点（能力/证据/风险/资源），长出一棵会生长的决策树；本地优先、不提供心理诊断。",
-  "author": "一人公司",
-  "isDesktopOnly": true
+ "id": "life-decision-tree",
+ "name": "Life Decision Tree",
+ "version": "0.1.1",
+ "minAppVersion": "1.11.0",
+ "description": "把碎片经历榨成四类节点（能力/证据/风险/资源），长出一棵会生长的决策树；本地优先、不提供心理诊断。",
+ "author": "一人公司",
+ "isDesktopOnly": true
 }
