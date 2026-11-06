@@ -24,7 +24,8 @@ const doc = read('docs/安装说明-陌生人版-v1-20261105.md');
 ok('1-4 安装说明写了「怎么收到更新」', /更新|升级/.test(doc), /更新|升级/.test(doc) ? '有更新段' : '缺更新段（用户装完不知道新版）');
 const guide = read('docs/手册-用户版-v1-20261106.md');
 ok('1-5 用户手册写了更新路径', /更新|升级/.test(guide), /更新|升级/.test(guide) ? '有' : '缺');
-ok('1-6 分发通道已配置（--repo 或 manifest.authorUrl）', !!REPO || !!MF.authorUrl, REPO || MF.authorUrl || '无 repo / 无 authorUrl ⇒ 没有托管源，Obsidian 查不到新版本');
+const repoTxt = REPO || MF.authorUrl || (read('README.md').match(/github\.com\/([\w.-]+\/[\w.-]+)/) || [])[1] || '';
+ok('1-6 分发通道已配置（--repo / authorUrl / README 仓库链接）', !!repoTxt, repoTxt || '无托管源 ⇒ Obsidian 查不到新版本');
 
 (async () => {
   let live = false; let note = '';

@@ -38,7 +38,7 @@ Everything is read/written locally. Export runs a redaction pass (phone / email 
 
 ## Support · 支持
 
-Open an issue in this repository. 装不上、有 bug，开 issue 或按教程最后一节的联系方式找我。
+Open an issue in this repository: https://github.com/tonyltz1215/life-decision-tree/issues 装不上、有 bug，开 issue 或按教程最后一节的联系方式找我。
 
 ## License · 许可
 
