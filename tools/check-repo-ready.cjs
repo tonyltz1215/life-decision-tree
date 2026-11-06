@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+'use strict';
+// check-repo-ready.cjs - 仓库就绪检查（Obsidian 商店/更新通道）
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+const ROOT = path.resolve(__dirname, '..');
+let bad = 0;
+const ok = (n, c, x) => { if (c) console.log('PASS ' + n + (x ? ' · ' + x : '')); else { bad += 1; console.log('FAIL ' + n + (x ? ' · ' + x : '')); } };
+const read = (p) => { try { return fs.readFileSync(path.join(ROOT, p), 'utf8'); } catch (e) { return ''; } };
+const sha = (p) => crypto.createHash('sha256').update(fs.readFileSync(path.join(ROOT, p))).digest('hex');
+const MF = JSON.parse(read('plugin/manifest.json') || '{}');
+ok('1-1 LICENSE 在位且是 MIT', /MIT License/.test(read('LICENSE')));
+const rd = read('README.md');
+ok('1-2 README 写了付费披露', /Payment is required for full access/i.test(rd));
+ok('1-3 README 写了联网披露', /Network use/i.test(rd));
+ok('1-4 根 manifest 与 plugin 逐字节一致', sha('manifest.json') === sha('plugin/manifest.json'));
+ok('1-5 根 main.js 与 plugin 逐字节一致', sha('main.js') === sha('plugin/main.js'));
+ok('1-6 根 styles.css 与 plugin 逐字节一致', sha('styles.css') === sha('plugin/styles.css'));
+const V = JSON.parse(read('versions.json') || '{}');
+ok('1-7 versions.json 覆盖当前版本', !!V[MF.version], JSON.stringify(V));
+ok('1-8 .gitignore 在位', fs.existsSync(path.join(ROOT, '.gitignore')));
+ok('1-9 发布工作流在位', fs.existsSync(path.join(ROOT, '.github/workflows/release.yml')));
+const upd = path.join(ROOT, 'dist/release/update', MF.version);
+const assets = ['manifest.json','main.js','styles.css','versions.json'].filter((f) => fs.existsSync(path.join(upd, f)));
+ok('1-10 release 四件资产齐', assets.length === 4, assets.length + '/4');
+ok('1-11 描述 ≤250 字符且句号结尾且无 emoji', (MF.description || '').length <= 250 && /[。.]$/.test(MF.description || '') && !/[\u{1F300}-\u{1FAFF}]/u.test(MF.description || ''), (MF.description || '').length + ' 字');
+ok('1-12 命令 id 不带插件 id 前缀', !/id: *'life-decision-tree[:"]/.test(read('plugin/main.js')));
+ok('2-1 负向：改一个字节根件就不一致', (() => { const a = fs.readFileSync(path.join(ROOT, 'main.js')); a[10] ^= 0xFF; return crypto.createHash('sha256').update(a).digest('hex') !== sha('plugin/main.js'); })());
+ok('2-2 负向：README 去掉披露会被抓', !/Payment is required for full access/i.test(read('README.md').replace('Payment is required for full access', '')));
+ok('2-3 负向：版本不写进 versions.json 会被抓', !V['9.9.9']);
+console.log(bad ? 'FAIL check-repo-ready · ' + bad + ' 项未过' : 'PASS check-repo-ready · 仓库就绪');
+process.exit(bad ? 1 : 0);

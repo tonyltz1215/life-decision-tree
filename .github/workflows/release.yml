@@ -1,0 +1,28 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Build release assets (manifest / main.js / styles.css / versions.json)
+        run: node tools/pack-update.cjs
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/release/update/*/manifest.json
+            dist/release/update/*/main.js
+            dist/release/update/*/styles.css
+            dist/release/update/*/versions.json
