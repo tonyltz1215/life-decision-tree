@@ -19,9 +19,9 @@ An Obsidian plugin. All data stays on your machine. 一个 Obsidian 插件，数
 ## Install · 安装
 
 1. Install [Obsidian](https://obsidian.md) 1.11.0+ (desktop).
-2. Download `life-decision-tree-0.1.0.zip` from the latest release, unzip it, and copy the whole `life-decision-tree-0.1.0` folder into `<your vault>/.obsidian/plugins/`.
-3. In Obsidian: Settings → Community plugins → turn on community plugins → enable **人生决策树**.
-4. Command palette (`Ctrl/Cmd+P`) → type `人生决策树` → **打开决策树视图**.
+2. Download `life-decision-tree-0.1.1.zip` from the latest release, unzip it, and copy the whole `life-decision-tree-0.1.1` folder into `<your vault>/.obsidian/plugins/`.
+3. In Obsidian: Settings → Community plugins → turn on community plugins → enable **Life Decision Tree**.
+4. Command palette (`Ctrl/Cmd+P`) → type `Life Decision Tree` → **打开决策树视图**.
 
 Community directory listing: pending review. 社区商店收录：审核中。
 
