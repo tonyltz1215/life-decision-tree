@@ -13,9 +13,9 @@ const DIFFICULTIES = [
 ];
 
 const ARCHETYPES = [
-  { id: 'bucket', name: '提桶者', tag: '卖时间换确定性', cover: '#3b82f6' },
-  { id: 'pipeline', name: '造管道者', tag: '代码/内容/知识，追求睡后收入', cover: '#22d3ee' },
-  { id: 'seller', name: '卖货者', tag: '实体/电商，重现金流与供应链', cover: '#eab308' },
+  { id: 'bucket', name: '提桶者', tag: '卖时间换确定性', cover: '#5aa9ff' },
+  { id: 'pipeline', name: '造管道者', tag: '代码/内容/知识，追求睡后收入', cover: '#2ee6a8' },
+  { id: 'seller', name: '卖货者', tag: '实体/电商，重现金流与供应链', cover: '#ffb020' },
   { id: 'landlord', name: '收租者', tag: '资产/版权/投资', cover: '#a78bfa' }
 ];
 

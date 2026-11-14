@@ -1,0 +1,128 @@
+{
+ "schema": "ldt-cases-v1",
+ "cases": [
+  {
+   "schema": "ldt-case-v1",
+   "case_id": "CASE-001",
+   "case_name": "私域代运营（3 个品牌客户）",
+   "archetype": "服务型/复购",
+   "one_liner": "帮小品牌做社群和复购，收月费＋GMV 佣金。",
+   "ceiling": "月 5–15 万，靠人手堆",
+   "cost": {
+    "money": {
+     "level": "低",
+     "text": "一台电脑＋一部手机，≈0 启动"
+    },
+    "time": {
+     "level": "中",
+     "text": "每天 4–6 小时"
+    },
+    "energy": {
+     "level": "中",
+     "text": "客户沟通占一半"
+    }
+   },
+   "core_factor": {
+    "skills_required": [
+     "社群运营",
+     "文案",
+     "数据复盘"
+    ],
+    "secret_sauce": "把复购率写进服务合同，按月对账"
+   },
+   "revenue": {
+    "model": "月费＋GMV 佣金",
+    "amount_range": "0.8–3 万/客户/月",
+    "margin": "60–70%"
+   },
+   "pitfalls": [
+    "先垫钱买量",
+    "只做拉新不做复购",
+    "客户只有 1 个"
+   ],
+   "status": "unverified"
+  },
+  {
+   "schema": "ldt-case-v1",
+   "case_id": "CASE-002",
+   "case_name": "独立开发小工具",
+   "archetype": "产品型/一次性",
+   "one_liner": "只解决一件事的小工具，买断制，本地优先。",
+   "ceiling": "月 1–5 万，靠持续更新",
+   "cost": {
+    "money": {
+     "level": "低",
+     "text": "服务器＋域名 ≈100 元/月"
+    },
+    "time": {
+     "level": "高",
+     "text": "开发期每天 6 小时"
+    },
+    "energy": {
+     "level": "中",
+     "text": "发版与答疑"
+    }
+   },
+   "core_factor": {
+    "skills_required": [
+     "写代码",
+     "做体验",
+     "写文档"
+    ],
+    "secret_sauce": "只做一件事，做到不用说明书"
+   },
+   "revenue": {
+    "model": "买断/年费",
+    "amount_range": "1–5 万/月",
+    "margin": "90%"
+   },
+   "pitfalls": [
+    "功能越加越多",
+    "不做分发",
+    "只靠朋友试用"
+   ],
+   "status": "unverified"
+  },
+  {
+   "schema": "ldt-case-v1",
+   "case_id": "CASE-003",
+   "case_name": "社区小超市线上化",
+   "archetype": "个体/线下＋线上",
+   "one_liner": "把 3 公里熟客搬进微信群，做预售＋自提。",
+   "ceiling": "日营业额 3–8 千",
+   "cost": {
+    "money": {
+     "level": "中",
+     "text": "店面租金 1.2 万/月"
+    },
+    "time": {
+     "level": "高",
+     "text": "每天 12 小时"
+    },
+    "energy": {
+     "level": "高",
+     "text": "进货＋配送"
+    }
+   },
+   "core_factor": {
+    "skills_required": [
+     "选品",
+     "算账",
+     "社群维护"
+    ],
+    "secret_sauce": "「明天到货」提前一天发群里，先收单再进货"
+   },
+   "revenue": {
+    "model": "商品差价＋配送费",
+    "amount_range": "3–8 千/天",
+    "margin": "18–25%"
+   },
+   "pitfalls": [
+    "生鲜损耗",
+    "只做线下不建群",
+    "赊账拖垮现金流"
+   ],
+   "status": "unverified"
+  }
+ ]
+}

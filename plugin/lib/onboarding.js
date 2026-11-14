@@ -4,8 +4,8 @@
 'use strict';
 const KEY = 'seenGuide';
 const STEPS = [
-  { id: 'sample', n: 1, title: '先看一棵真的', btn: '看样例树', act: 'guide-sample', text: '打开「决策树」：16 个节点、3 条分支、1 条红线——存款只够 2 个月，「裸辞」那条是锁着的。' },
-  { id: 'interview', n: 2, title: '回答 15 个问题', btn: '去访谈入库', act: 'guide-interview', text: '约 15 分钟，当场生成你自己的 18 个节点和三层记忆；填一半也能存草稿，关窗不丢。' },
+  { id: 'sample', n: 1, title: '先看一棵真的', btn: '看样例树', act: 'guide-sample', text: '打开「决策树」：先看一棵样例树（16 节点 · 3 分支 · 1 红线，裸辞那条锁着）；生成后就是你自己的树。' },
+  { id: 'interview', n: 2, title: '回答 15 个问题', btn: '去访谈入库', act: 'guide-interview', text: '约 15 分钟，当场生成你自己的节点树和三层记忆；填一半也能存草稿，关窗不丢。' },
   { id: 'data', n: 3, title: '数据是你的', btn: '先看导出', act: 'guide-export', text: '全部写在库目录 .ldt/（3 个文件）；一键导出会自动脱敏手机号／邮箱／身份证，也可以一键删干净。' }
 ];
 

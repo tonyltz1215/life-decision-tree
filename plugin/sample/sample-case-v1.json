@@ -1,0 +1,49 @@
+{
+  "schema": "ldt-case-v1",
+  "case_id": "cs-xhs-photographer",
+  "case_name": "小红书独立摄影师",
+  "archetype": "提桶",
+  "cost": {
+    "money": {
+      "level": "低",
+      "text": "相机二手 3000–8000 元"
+    },
+    "time": {
+      "level": "多",
+      "text": "每周 15–20 小时，周末常满"
+    },
+    "energy": {
+      "level": "多",
+      "text": "拍摄+修图，节假日最忙"
+    }
+  },
+  "ceiling": "小成",
+  "core_factor": {
+    "skills_required": [
+      "审美",
+      "拍摄",
+      "修图",
+      "获客",
+      "沟通"
+    ],
+    "secret_sauce": "稳定出片风格 + 复购老客，不靠低价冲单"
+  },
+  "revenue": {
+    "model": "接单（写真/商家图）+ 小课",
+    "amount_range": "月 5k–2w",
+    "margin": "中"
+  },
+  "pitfalls": [
+    "获客极度依赖平台流量，限流即断单",
+    "周末与节假日全被占用",
+    "低价单挤占时间，越忙越穷"
+  ],
+  "one_liner": "用审美帮人拍写真，靠接单变现",
+  "status": "unverified",
+  "source": {
+    "model": "示例",
+    "at": "2026-11-09T14:00:00+08:00",
+    "prompt_version": "case-v1"
+  },
+  "linked_levels": []
+}

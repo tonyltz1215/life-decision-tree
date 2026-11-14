@@ -1,8 +1,11 @@
 /* provider-b.js - DeepSeek(provider B) 纯函数：请求体 + 响应分类（不联网、不读 Key） */
 'use strict';
 const MODEL = 'deepseek-flash';
-function buildBody(prompt) {
-  return { model: MODEL, messages: [{ role: 'user', content: String(prompt || '只回复两个字：连接成功') }], max_tokens: 64, temperature: 0 };
+function buildBody(prompt, opts) {
+  const o = opts || {};
+  const maxTokens = Number(o.maxTokens) > 0 ? Number(o.maxTokens) : 64;
+  const temperature = typeof o.temperature === 'number' ? o.temperature : 0;
+  return { model: MODEL, messages: [{ role: 'user', content: String(prompt || '只回复两个字：连接成功') }], max_tokens: maxTokens, temperature: temperature };
 }
 function classify(status, body) {
   const s = Number(status || 0);

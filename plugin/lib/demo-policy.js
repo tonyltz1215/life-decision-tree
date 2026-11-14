@@ -19,7 +19,7 @@ function policy(input) {
   if (strict === 'once') {
     const used = s.demoUsed === true;
     return used
-      ? { demo: true, licensed: false, strict: strict, canGenerate: false, mode: 'draft', message: '体验额度已用完（可生成 1 次）；填兑换码后无限生成' }
+      ? { demo: true, licensed: false, strict: strict, canGenerate: false, mode: 'draft', message: '体验版只能生成 1 次正式树，本次已用完；填兑换码后无限生成' }
       : { demo: true, licensed: false, strict: strict, canGenerate: true, mode: 'trial', message: '体验额度：可生成 1 次正式树，之后只出草稿' };
   }
   return { demo: true, licensed: false, strict: 'off', canGenerate: true, mode: 'open', message: '' };

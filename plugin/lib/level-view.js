@@ -11,11 +11,32 @@ const BANNED = ['死穴', '驳回', '不合格', '逆袭', '30 天', '保证成�
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
 function hasBanned(s) { const t = String(s || ''); return BANNED.filter(function (w) { return t.indexOf(w) >= 0; }); }
 
+const NINE = ['一句话结论','解释','为什么值得记','适用范围','成立条件','不适用与边界','反例','内容身份（事实/推测）','来源锚点（截图或链接）'];
 function criteriaOf(level, difficulty) {
   const ov = (level.difficultyOverrides || {})[difficulty];
   return Array.isArray(ov) && ov.length ? ov : (level.criteria || []);
 }
 
+// 2026-11-11 战役：有资产包就用包的关卡（动态数），没有就回退骨架 4×3
+function fromPack(l) {
+  const d = (l && l.detail) || {};
+  return {
+    id: l.id, stage: '关卡', title: l.title || l.id,
+    goal: d.goal || l.title || '',
+    uiCopy: l.condition || '',
+    criteria: l.condition ? [l.condition] : [],
+    exampleEvidence: Array.isArray(d.evidence_required) ? d.evidence_required : [],
+    badExample: '',
+    deathPoints: [],
+    nextAction: d.next_action || '',
+    sourceAnchor: d.source_anchor || '',
+    why: d.why || '',
+    needs: [],
+    status: l.status || 'open',
+    kind: l.kind || 'main',
+    _pack: true
+  };
+}
 function check(skeleton) {
   const reasons = [];
   if (!skeleton || !skeleton.LEVELS) { reasons.push('骨架数据缺失'); return { ok: false, reasons: reasons }; }
@@ -106,50 +127,76 @@ function buildMapHtml(opts) {
   const diffId = sk.DIFFICULTIES.some(function (d) { return d.id === o.difficulty; }) ? o.difficulty : 'standard';
   const arch = sk.ARCHETYPES.filter(function (a) { return a.id === archeId; })[0];
   const diff = sk.DIFFICULTIES.filter(function (d) { return d.id === diffId; })[0];
-  const levels = sk.LEVELS[archeId] || [];
+  const packIn = Array.isArray(o.levels) && o.levels.length ? o.levels : null;
+  const allLevels = packIn ? packIn.map(fromPack) : (sk.LEVELS[archeId] || []);
+  const mains = allLevels.filter(function (l) { return !l._pack || (l.kind !== 'backup' && l.kind !== 'hidden'); });
+  const backups = allLevels.filter(function (l) { return l._pack && l.kind === 'backup'; });
+  const hiddens = allLevels.filter(function (l) { return l._pack && l.kind === 'hidden'; });
+  const levels = mains;
   const run = o.run || {};
   const st = run.levels || {};
   const diffChips = sk.DIFFICULTIES.map(function (d) { return '<span class="ldt-chip' + (d.id === diffId ? ' is-on' : '') + '" data-diff="' + esc(d.id) + '">' + esc(d.name) + '</span>'; }).join('');
   const archChips = sk.ARCHETYPES.map(function (a) { return '<span class="ldt-chip' + (a.id === archeId ? ' is-on' : '') + '" data-arch="' + esc(a.id) + '"><i style="background:' + esc(a.cover) + '"></i>' + esc(a.name) + '</span>'; }).join('');
   const chainHtml = ['<span class="ldt-node is-done">入口</span>'].concat(levels.map(function (lv, i) {
-    let s = (st[lv.id] || {}).status || (i === 0 ? 'open' : 'locked');
+    let s = (st[lv.id] && st[lv.id].status) || lv.status || (i === 0 ? 'open' : 'locked');
     if (o.demoMode && i > 0) { s = 'locked'; }
     const cls = s === 'done' ? 'is-done' : (s === 'open' ? 'is-open' : 'is-lock');
     const mark = s === 'done' ? ' ✓' : (s === 'open' ? ' ●' : ' ○');
     return '<span class="ldt-node ' + cls + '">' + esc(lv.title) + mark + '</span>';
   })).join('<span class="ldt-arrow">→</span>');
-  const cards = levels.map(function (lv, i) {
+  function cardHtml(lv, i) {
     let s = (st[lv.id] || {}).status || (i === 0 ? 'open' : 'locked');
     if (o.demoMode && i > 0) { s = 'locked'; }
     const cs = criteriaOf(lv, diffId);
     const ovr = Array.isArray((lv.difficultyOverrides || {})[diffId]) && (lv.difficultyOverrides[diffId] || []).length > 0;
     const stTxt = s === 'done' ? '已点亮' : (s === 'open' ? '进行中' : '未解锁');
-    return '<div class="ldt-lv ' + s + '" data-lv="' + esc(lv.id) + '">'
+    return '<div class="ldt-lv ' + s + '" data-lv="' + esc(lv.id) + '"' + (s === 'done' ? ' style="background:rgba(46,230,168,.08);border-color:rgba(46,230,168,.35)"' : '') + '>'
       + '<div class="ldt-lv-h"><b>' + esc(lv.stage) + ' · ' + esc(lv.title) + '</b>' + (lv.boss ? '<span class="ldt-boss">BOSS</span>' : '') + '<span class="ldt-st">' + stTxt + '</span></div>'
       + '<div class="ldt-goal">目标：' + esc(lv.goal) + '</div>'
-      + '<div class="ldt-copy">' + esc(lv.uiCopy) + '</div>'
+      + (lv._pack ? '' : '<div class="ldt-copy">' + esc(lv.uiCopy) + '</div>')
+      + (lv.why ? '<div class="ldt-why">为什么：' + esc(lv.why) + '</div>' : '')
       + '<div class="ldt-sub">通关判据' + (ovr ? '（' + esc(diff.name) + '）' : '') + '</div><ul class="ldt-crit">' + cs.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul>'
-      + '<details class="ldt-ex"><summary>示例凭据 / 反例</summary>'
-      + '<div class="ldt-ex-ok">✓ ' + esc((lv.exampleEvidence || [])[0] || '') + '</div>'
-      + '<div class="ldt-ex-bad">✗ ' + esc(lv.badExample || '') + '</div></details>'
-      + '<div class="ldt-shield">🛡 护身符：' + esc((lv.deathPoints || []).join('；')) + '</div>'
+      + ((lv.exampleEvidence || []).length ? '<details class="ldt-ex" open><summary>示例凭据 / 反例（' + lv.exampleEvidence.length + ' 条要什么证据）</summary>'
+        + '<ul class="ldt-ex-ok">' + lv.exampleEvidence.map(function (x) { return '<li>✓ ' + esc(x) + '</li>'; }).join('') + '</ul>'
+        + (lv.badExample ? '<div class="ldt-ex-bad">✗ ' + esc(lv.badExample) + '</div>' : '') + '</details>' : '')
+      + (lv.nextAction ? '<div class="ldt-next">下一步：' + esc(lv.nextAction) + '</div>' : '')
+      + ((lv.deathPoints || []).length ? '<div class="ldt-shield">🛡 护身符：' + esc(lv.deathPoints.join('；')) + '</div>' : '')
+      + (lv.sourceAnchor ? '<div class="ldt-src-anchor">来源锚点：' + esc(lv.sourceAnchor) + '</div>' : '')
+      + '<details class="ldt-nine"><summary>九段证据模板（照这个写）</summary><ol>' + NINE.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol></details>'
       + '<div class="ldt-lv-actions"><span class="ldt-btn" data-act="evidence" data-lv="' + esc(lv.id) + '">贴证据</span>'
+      + (s === 'open' ? '<span class="ldt-btn" data-act="lv-done" data-lv="' + esc(lv.id) + '">手动标记完成</span>' : '')
       + '<span class="ldt-btn ghost" data-act="copy" data-lv="' + esc(lv.id) + '">复制指令</span>'
       + '<span class="ldt-lv-xp">XP ' + ((st[lv.id] || {}).xp || 0) + '</span></div></div>';
-  }).join('');
+  }
+  const cards = levels.map(cardHtml).join('');
+  // 三态（主线/备用/隐藏）：用现有数据渲染，不新增关卡内容
+  const _mdl = o.model || {};
+  const _br = Array.isArray(_mdl.branches) ? _mdl.branches : [];
+  const _lockedB = _br.filter(function (b) { return b && b.unlocked === false; });
+  const _hid = Array.isArray(_mdl.hidden_skills) ? _mdl.hidden_skills : [];
+  const _cell = 'flex:1;min-width:0;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.5';
+  const _t = 'opacity:.65;margin-right:6px';
+  const tsHtml = '<div class="ldt-three" style="display:flex;gap:8px;margin:10px 0 2px">'
+    + '<div style="' + _cell + '"><span style="' + _t + '">主线</span><b>' + mains.length + '</b> 关（当前路线）</div>'
+    + '<div style="' + _cell + '"><span style="' + _t + '">备用</span><b>' + backups.length + '</b> 关 · ' + (_lockedB.length ? _lockedB.map(function (b) { return esc(b.title) + '（需 ' + esc((b.needs || []).join('＋') || '条件未满足') + '）'; }).join('；') : '暂无（点亮主线后出现）') + '</div>'
+    + '<div style="' + _cell + '"><span style="' + _t + '">隐藏</span>' + (_hid.length ? _hid.slice(0, 2).map(function (h) { return esc(h.text || h); }).join('；') : '未收集（答完 15 题后出现）') + '</div>'
+    + '</div>';
   const html = '<div class="ldt-map">'
     + '<div class="ldt-map-head"><div><div class="ldt-map-t">选一个身份，看清下一步</div><div class="ldt-map-s">当前：' + esc(arch.name) + ' · ' + esc(diff.name) + ' — ' + esc(diff.copy) + '</div></div>'
     + '<div class="ldt-map-actions"><span class="ldt-pill" data-act="reload">↻ 重读</span><span class="ldt-pill primary" data-act="copy">复制本关指令</span></div></div>'
-    + (o.demoMode ? '<div class="ldt-demo">体验版：只开放第一关。点右上「体验版 · 升级」解锁全部 12 关。</div>' : '')
-    + '<div class="ldt-pick"><div class="ldt-pick-t">难度</div><div class="ldt-chips">' + diffChips + '</div></div>'
+    + (o.demoMode ? '<div class="ldt-demo">体验版：只开放第一关。点右上「体验版 · 升级」解锁全部关卡。</div>' : '')
+    + '<div class="ldt-pick"><div class="ldt-pick-t">难度</div><div class="ldt-chips">' + diffChips + '</div>' + (packIn && !packIn.some(function (x) { return x.difficultyOverrides && Object.keys(x.difficultyOverrides).length; }) ? '<span class="ldt-muted" style="margin-left:8px">当前资产包没写难度判据：难度只影响骨架/指令，卡面不变</span>' : '') + '</div>'
     + '<div class="ldt-pick"><div class="ldt-pick-t">职业大类</div><div class="ldt-chips">' + archChips + '</div></div>'
     + '<div class="ldt-chain">' + chainHtml + '</div>'
+    + tsHtml
     + (o.drawer && o.drawer.lv ? drawerHtml(o.drawer, levels, diffId, run) : '')
     + (o.exportCheck && o.exportCheck.open ? exportHtml(o.exportCheck) : '')
     + '<div class="ldt-lvs">' + cards + '</div>'
+    + (backups.length ? '<div class="ldt-head2" style="margin-top:14px"><i></i>备用关卡 <span class="ldt-h2s">' + backups.length + ' 关 · 点亮主线后可做</span></div><div class="ldt-lvs">' + backups.map(function (lvx, i) { var copy = Object.assign({}, lvx); if (o.demoMode) { copy.status = 'locked'; } return cardHtml(copy, i); }).join('') + '</div>' : '')
+    + (hiddens.length ? '<div class="ldt-muted" style="margin-top:8px">隐藏关 ' + hiddens.length + ' 个（默认不上图，补满证据后出现）</div>' : '')
     + '<div class="ldt-note">' + esc(DISCLAIMER) + '</div></div>';
   const done = levels.filter(function (lv) { return (st[lv.id] || {}).status === 'done'; }).length;
-  return { ok: true, refusal: null, reasons: [], stats: { archetype: archeId, difficulty: diffId, archName: arch.name, diffName: diff.name, levels: levels.length, done: done }, html: html };
+  return { ok: true, refusal: null, reasons: [], stats: { archetype: archeId, difficulty: diffId, archName: arch.name, diffName: diff.name, levels: levels.length, total: allLevels.length, backups: backups.length, hidden: hiddens.length, done: done }, html: html };
 }
 
 module.exports = { buildMapHtml: buildMapHtml, drawerHtml: drawerHtml, exportHtml: exportHtml, buildPrompt: buildPrompt, check: check, criteriaOf: criteriaOf, DISCLAIMER: DISCLAIMER, BANNED: BANNED };

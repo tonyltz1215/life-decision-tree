@@ -1,0 +1,308 @@
+{
+  "schema": "ldt-assets-v2",
+  "generated_at": "2026-11-07T00:05:00+08:00",
+  "mode": "init",
+  "summary": "样例 v2.1：3 主线关 + 1 备用关 + 1 隐藏关，每关带详情页字段。",
+  "domains": [
+    "管理/统筹",
+    "产品/交付",
+    "技术/工具",
+    "销售/转化",
+    "风控/财务",
+    "分析/洞察"
+  ],
+  "skills": [
+    {
+      "id": "sk-coord",
+      "name": "跨部门协调",
+      "domain": [
+        "管理/统筹",
+        "产品/交付"
+      ],
+      "type": "能力",
+      "evidence": [
+        "协调 100 人场地，还在预算内"
+      ],
+      "level": 2,
+      "upgrade_condition": "再提供一次「跨 3 个部门、无延期」的证据即可升级",
+      "status": "verified",
+      "source": "interview"
+    },
+    {
+      "id": "sk-cleanup",
+      "name": "烂账梳理",
+      "domain": [
+        "分析/洞察",
+        "产品/交付"
+      ],
+      "type": "能力",
+      "evidence": [
+        "两周理清部门三年乱账"
+      ],
+      "level": 3,
+      "upgrade_condition": "独立做一次对账并出报告",
+      "status": "verified",
+      "source": "interview"
+    },
+    {
+      "id": "sk-template",
+      "name": "模板化",
+      "domain": [
+        "内容/表达",
+        "管理/统筹"
+      ],
+      "type": "能力",
+      "evidence": [
+        "周报模板全组在用"
+      ],
+      "level": 2,
+      "upgrade_condition": "模板被 2 个组采用",
+      "status": "verified",
+      "source": "interview"
+    },
+    {
+      "id": "sk-fix-it",
+      "name": "同事口中的修电脑的人",
+      "domain": [
+        "技术/工具"
+      ],
+      "type": "资源",
+      "evidence": [
+        "同事老找我修电脑"
+      ],
+      "level": 1,
+      "upgrade_condition": "把它变成可收费的服务",
+      "status": "verified",
+      "source": "interview"
+    },
+    {
+      "id": "sk-sponsor",
+      "name": "拉赞助",
+      "domain": [
+        "获客/流量"
+      ],
+      "type": "证据",
+      "evidence": [
+        "大学社团拉过三千块"
+      ],
+      "level": 1,
+      "upgrade_condition": "再做一次并留下成交流水",
+      "status": "verified",
+      "source": "interview"
+    },
+    {
+      "id": "sk-negotiate",
+      "name": "对外谈判",
+      "domain": [
+        "销售/转化"
+      ],
+      "type": "风险",
+      "evidence": [],
+      "level": 0,
+      "upgrade_condition": "提供一次真实谈判结果",
+      "status": "unverified",
+      "source": "ai"
+    },
+    {
+      "id": "sk-runway",
+      "name": "现金储备",
+      "domain": [
+        "风控/财务"
+      ],
+      "type": "风险",
+      "evidence": [
+        "存款够 2 个月"
+      ],
+      "level": 1,
+      "upgrade_condition": "把现金储备拉到 6 个月支出",
+      "status": "verified",
+      "source": "interview"
+    },
+    {
+      "id": "sk-side",
+      "name": "副业起量",
+      "domain": [
+        "销售/转化",
+        "产品/交付"
+      ],
+      "type": "资源",
+      "evidence": [
+        "周末 6 小时可支配"
+      ],
+      "level": 0,
+      "upgrade_condition": "先做出第一笔真实成交",
+      "status": "unverified",
+      "source": "ai"
+    }
+  ],
+  "levels": [
+    {
+      "id": "lv-pmf",
+      "title": "0→1 验证 PMF",
+      "condition": "获得第一笔真实收入",
+      "gate_type": "验证型",
+      "kind": "main",
+      "ui_copy": {
+        "amount_text": "金额由 AI 按你的处境生成（示例：≥9.9 元）",
+        "helper": "先做一次，再决定要不要做"
+      },
+      "status": "open",
+      "evidence_refs": [
+        "sk-side",
+        "sk-template"
+      ],
+      "detail": {
+        "goal": "把「我会的东西」卖出去一次",
+        "why": "没有真实成交，后面的关卡都是空话",
+        "evidence_required": [
+          "一次真实收款记录",
+          "买家一句原话"
+        ],
+        "next_action": "先找 3 个熟人，只问一句：这个你愿不愿意付 9.9",
+        "related_skills": [
+          "sk-side",
+          "sk-template"
+        ]
+      }
+    },
+    {
+      "id": "lv-stable",
+      "title": "稳定获客",
+      "condition": "连续 4 周每周至少 1 单，且退款率低于 10%",
+      "gate_type": "生存型",
+      "kind": "main",
+      "ui_copy": {
+        "amount_text": "门槛金额由 AI 按你的生活成本生成",
+        "helper": "看稳定性，不看单笔大小"
+      },
+      "status": "locked",
+      "evidence_refs": [
+        "sk-negotiate"
+      ],
+      "detail": {
+        "goal": "让收入不靠运气",
+        "why": "单笔靠运气，连续四周才是能力",
+        "evidence_required": [
+          "四周的成交记录",
+          "退款/差评记录"
+        ],
+        "next_action": "把每周获客动作固定成 3 个可重复步骤",
+        "related_skills": [
+          "sk-negotiate",
+          "sk-coord"
+        ]
+      }
+    },
+    {
+      "id": "lv-stable-bk",
+      "title": "备用 · 接单转介绍",
+      "condition": "连续 2 周没有新客，但老客愿意转介绍",
+      "gate_type": "验证型",
+      "kind": "backup",
+      "parent_level": "lv-stable",
+      "unlock_condition": "第二关连续 2 次未过（两周 0 新客）",
+      "ui_copy": {
+        "amount_text": "金额由 AI 按你的客单价生成",
+        "helper": "获客卡住时，先榨干老客"
+      },
+      "status": "locked",
+      "evidence_refs": [
+        "sk-sponsor"
+      ],
+      "detail": {
+        "goal": "用老客把断掉的新客流接回来",
+        "why": "主线靠拉新，断了就换一条",
+        "evidence_required": [
+          "一位老客的转介绍记录"
+        ],
+        "next_action": "给最近 3 个老客各发一句：最近有谁也在问这个问题",
+        "related_skills": [
+          "sk-sponsor"
+        ]
+      }
+    },
+    {
+      "id": "lv-scale",
+      "title": "系统化运营",
+      "condition": "任意一单可交给他人独立完成",
+      "gate_type": "生存型",
+      "kind": "main",
+      "ui_copy": {
+        "amount_text": "—",
+        "helper": "能复制才叫生意"
+      },
+      "status": "locked",
+      "evidence_refs": [
+        "sk-coord",
+        "sk-cleanup"
+      ],
+      "detail": {
+        "goal": "把自己从流程里摘出来",
+        "why": "你不在也能交付，才算资产",
+        "evidence_required": [
+          "一份 SOP",
+          "一次他人独立交付记录"
+        ],
+        "next_action": "把最近一单的每一步写成清单",
+        "related_skills": [
+          "sk-coord",
+          "sk-cleanup"
+        ]
+      }
+    },
+    {
+      "id": "lv-hidden-pivot",
+      "title": "??? · 换赛道",
+      "condition": "在当前赛道连续受挫后，用现有卡片拼出新卖法",
+      "gate_type": "验证型",
+      "kind": "hidden",
+      "unlock_condition": "同一领域标签下 ≥3 张卡升到 level≥2，且第二关未过",
+      "ui_copy": {
+        "amount_text": "金额由 AI 按新赛道重算",
+        "helper": "这条线本来不该被看见"
+      },
+      "status": "locked",
+      "evidence_refs": [
+        "sk-analyze"
+      ],
+      "detail": {
+        "goal": "用已有能力换一个卖法",
+        "why": "卡住不一定是能力问题，可能是赛道问题",
+        "evidence_required": [
+          "一个新赛道的 1 次真实报价"
+        ],
+        "next_action": "把 level≥2 的卡列出来，问 AI：这些能力还能卖给谁",
+        "related_skills": [
+          "sk-analyze",
+          "sk-cleanup"
+        ]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "id": "rt-1",
+      "from": "lv-pmf",
+      "to": "lv-stable",
+      "trigger": "成交 3 单"
+    },
+    {
+      "id": "rt-2",
+      "from": "lv-stable",
+      "to": "lv-scale",
+      "trigger": "连续 4 周达标"
+    },
+    {
+      "id": "rt-3",
+      "from": "lv-stable",
+      "to": "lv-stable-bk",
+      "trigger": "连续 2 次未过（备用线）"
+    },
+    {
+      "id": "rt-4",
+      "from": "lv-hidden-pivot",
+      "to": "lv-scale",
+      "trigger": "隐藏关通过后并入主线"
+    }
+  ]
+}

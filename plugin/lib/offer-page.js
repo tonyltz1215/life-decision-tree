@@ -3,7 +3,7 @@
  * 对外件纪律：不放外链、不承诺收益、不做心理诊断、不提无关平台。
  */
 'use strict';
-const PRICE = { original: 129, intro: 99 };
+const PRICE = { original: 99, intro: 69 }; // 2026-11-10 老板拍板：定价 99／推广价 69（2026-12-01 前）
 const PROMISE_LIMIT = 50;
 const IMAGES = {
   diag: 'assets/diag-panel.png',
@@ -29,36 +29,36 @@ function buildHtml(opts) {
   p.push('<meta name="viewport" content="width=device-width,initial-scale=1">');
   p.push('<title>人生决策树 · 工作几年后卡住的人，先别急着辞职</title>');
   p.push('<style>');
-  p.push('*{box-sizing:border-box}body{margin:0;background:#05090e;color:#dbe7f3;font:15px/1.75 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}');
+  p.push('*{box-sizing:border-box}body{margin:0;background:#0a0c0f;color:#dbe7f3;font:15px/1.75 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}');
   p.push('.wrap{max-width:1080px;margin:0 auto;padding:0 24px}');
-  p.push('.hero{padding:64px 0 40px;background:radial-gradient(900px 420px at 78% -10%,#0d2436 0%,#081420 55%,#05090e 100%)}');
-  p.push('.eyebrow{display:inline-flex;gap:10px;align-items:center;font-size:13px;color:#7f97ab;border:1px solid rgba(120,180,220,.22);border-radius:999px;padding:5px 12px}');
-  p.push('.dot{width:7px;height:7px;border-radius:50%;background:#22d3ee;display:inline-block}');
+  p.push('.hero{padding:64px 0 40px;background:radial-gradient(900px 420px at 78% -10%,#0f1317 0%,#0b0e11 55%,#0a0c0f 100%)}');
+  p.push('.eyebrow{display:inline-flex;gap:10px;align-items:center;font-size:13px;color:#9aa6ae;border:1px solid rgba(120,180,220,.22);border-radius:999px;padding:5px 12px}');
+  p.push('.dot{width:7px;height:7px;border-radius:50%;background:#2ee6a8;display:inline-block}');
   p.push('h1{font-size:44px;line-height:1.25;margin:22px 0 14px;letter-spacing:-.5px}');
-  p.push('.lede{font-size:18px;color:#a9c0d3;max-width:720px}');
+  p.push('.lede{font-size:18px;color:#cfe8dc;max-width:720px}');
   p.push('.cta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:30px 0 8px}');
-  p.push('.btn{display:inline-block;padding:13px 26px;border-radius:999px;font-weight:700;font-size:16px;text-decoration:none;color:#04121a;background:linear-gradient(135deg,#22d3ee,#38bdf8)}');
-  p.push('.btn.ghost{background:transparent;color:#a5f3fc;border:1px solid rgba(34,211,238,.45)}');
-  p.push('.note{font-size:13px;color:#7f97ab}');
-  p.push('.shot{margin:40px 0;border:1px solid rgba(120,180,220,.18);border-radius:16px;overflow:hidden;background:#081420}');
+  p.push('.btn{display:inline-block;padding:13px 26px;border-radius:999px;font-weight:700;font-size:16px;text-decoration:none;color:#0a1410;background:linear-gradient(135deg,#2ee6a8,#38bdf8)}');
+  p.push('.btn.ghost{background:transparent;color:#b9f5da;border:1px solid rgba(46, 230, 168,.45)}');
+  p.push('.note{font-size:13px;color:#9aa6ae}');
+  p.push('.shot{margin:40px 0;border:1px solid rgba(120,180,220,.18);border-radius:16px;overflow:hidden;background:#0b0e11}');
   p.push('.shot img{display:block;width:100%;height:auto}');
-  p.push('.cap{padding:10px 16px;font-size:13px;color:#7f97ab;border-top:1px solid rgba(120,180,220,.12)}');
+  p.push('.cap{padding:10px 16px;font-size:13px;color:#9aa6ae;border-top:1px solid rgba(120,180,220,.12)}');
   p.push('h2{font-size:26px;margin:56px 0 8px}');
   p.push('.pains{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}');
   p.push('.pain{border:1px solid rgba(120,180,220,.18);border-radius:14px;padding:18px;background:rgba(12,22,33,.88)}');
   p.push('.pain b{display:block;color:#fca5a5;font-size:13px;margin-bottom:6px}');
   p.push('.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}');
   p.push('.card{border:1px solid rgba(120,180,220,.18);border-radius:14px;padding:20px;background:rgba(12,22,33,.88)}');
-  p.push('.card h3{margin:0 0 8px;font-size:17px;color:#a5f3fc}');
-  p.push('.card p{margin:0;color:#a9c0d3;font-size:14px}');
+  p.push('.card h3{margin:0 0 8px;font-size:17px;color:#b9f5da}');
+  p.push('.card p{margin:0;color:#cfe8dc;font-size:14px}');
   p.push('table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15px}');
   p.push('th,td{text-align:left;padding:12px 14px;border-bottom:1px solid rgba(120,180,220,.14)}');
-  p.push('th{color:#7f97ab;font-weight:600;font-size:13px}');
-  p.push('.price{font-size:22px;color:#a5f3fc;font-weight:800}');
-  p.push('ol.steps{padding-left:20px;color:#c7d8e6}ol.steps li{margin:10px 0}');
-  p.push('.faq{margin:18px 0}.faq q{display:block;color:#a5f3fc;margin-top:16px;quotes:none;font-weight:600}');
-  p.push('.faq p{margin:6px 0 0;color:#a9c0d3;font-size:14px}');
-  p.push('footer{margin:64px 0 40px;padding-top:22px;border-top:1px solid rgba(120,180,220,.14);color:#7f97ab;font-size:13px}');
+  p.push('th{color:#9aa6ae;font-weight:600;font-size:13px}');
+  p.push('.price{font-size:22px;color:#b9f5da;font-weight:800}');
+  p.push('ol.steps{padding-left:20px;color:#d4e9df}ol.steps li{margin:10px 0}');
+  p.push('.faq{margin:18px 0}.faq q{display:block;color:#b9f5da;margin-top:16px;quotes:none;font-weight:600}');
+  p.push('.faq p{margin:6px 0 0;color:#cfe8dc;font-size:14px}');
+  p.push('footer{margin:64px 0 40px;padding-top:22px;border-top:1px solid rgba(120,180,220,.14);color:#9aa6ae;font-size:13px}');
   p.push('@media(max-width:820px){h1{font-size:32px}.pains,.grid3{grid-template-columns:1fr}}');
   p.push('</style></head><body>');
 
@@ -66,9 +66,9 @@ function buildHtml(opts) {
   p.push('<span class="eyebrow"><i class="dot"></i>本地运行 · 不联网 · Obsidian 插件 v0.1.0</span>');
   p.push('<h1>工作几年后卡住的人，<br>先别急着辞职</h1>');
   p.push('<p class="lede">把你说过的事摊开：<b>16 个节点、3 条分支、1 条红线</b>——哪条路真的能走，树上看。证据不够，它拒绝给你结论。</p>');
-  p.push('<div class="cta"><a class="btn" href="#buy">¥' + intro + ' 内测（前 ' + PROMISE_LIMIT + ' 名）</a>');
+  p.push('<div class="cta"><a class="btn" href="#buy">¥' + intro + ' 推广价（2026-12-01 前）</a>');
   p.push('<a class="btn ghost" href="#how">先玩体验版</a>');
-  p.push('<span class="note">原价 ¥' + original + ' · 买断 · 无订阅 · 数据在你电脑上</span></div>');
+  p.push('<span class="note">定价 ¥' + original + ' · 买断 · 无订阅 · 数据在你电脑上</span></div>');
   p.push('<div class="shot"><img src="' + esc(img.diag) + '" alt="诊断三态"><div class="cap">同一根分支，答一次和答两次不是一个可信度：已掌握／需要再验证／待补强</div></div>');
   p.push('</div></section>');
 
@@ -88,8 +88,8 @@ function buildHtml(opts) {
   p.push('<div class="shot"><img src="' + esc(img.tree) + '" alt="决策树"><div class="cap">左边是节点（蓝＝事实／黄＝推测／红＝未验证风险），下面是 3 条分支；「裸辞」被财务红线锁住</div></div>');
 
   p.push('<h2 id="buy">多少钱</h2><table><tr><th>档</th><th>价格</th><th>说明</th></tr>');
-  p.push('<tr><td>原价</td><td class="price">¥' + original + '</td><td>买断，后续版本免费更新</td></tr>');
-  p.push('<tr><td>内测价</td><td class="price">¥' + intro + '</td><td>前 ' + PROMISE_LIMIT + ' 名，锁价</td></tr>');
+  p.push('<tr><td>定价</td><td class="price">¥' + original + '</td><td>买断，后续版本免费更新</td></tr>');
+  p.push('<tr><td>推广价</td><td class="price">¥' + intro + '</td><td>2026-12-01 前有效</td></tr>');
   p.push('<tr><td>熟人</td><td class="price">免费</td><td>私聊我拿码</td></tr></table>');
   if (showPromise) {
     p.push('<p class="note">内测权益：前 ' + PROMISE_LIMIT + ' 名含一次 15 分钟异步文本诊断（提交文字，当天回）——已售 ' + sold + '/' + PROMISE_LIMIT + '。</p>');

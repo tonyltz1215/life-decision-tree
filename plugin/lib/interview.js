@@ -63,6 +63,56 @@ function deriveSkills(evNodes) {
   return hits.slice(0, 3);
 }
 
+// ===== 2026-11-11：按身份分化分支（老板拍板）=====
+// 同一份 15 题，按「想做什么」给出三条不同的路；B-02 永远是高风险那条（锁着），B-03 是第三条中间路。
+const SCENARIOS = {
+  switch: { label: '转行型',
+    b: [{ t: '主业保底＋技能迁移', n: [] }, { t: '裸辞/全职转行', n: ['存款≥6 个月', '1 次真实面试或成交'] }, { t: '内部转岗或试岗', n: [] }],
+    q: ['当年为什么留在主业？', '你为转行做过哪一次真实尝试？', '上次转岗/换组为什么没成？'] },
+  business: { label: '创业/扩店型',
+    b: [{ t: '保住现金流＋小成本试水', n: [] }, { t: '立刻全职开店/扩店', n: ['存款≥6 个月', '1 次真实试营业成交'] }, { t: '线上化或加盟轻资产', n: [] }],
+    q: ['当年为什么先保住这份收入？', '你为开店/扩店做过哪一次真实试营业？', '上次线上化/加盟卡在哪？'] },
+  side: { label: '副业型',
+    b: [{ t: '主业保底＋副业周更', n: [] }, { t: '辞职 all-in 副业', n: ['存款≥6 个月', '1 次真实收钱'] }, { t: '接单验证再放大', n: [] }],
+    q: ['当年为什么先留在主业？', '你为副业做过哪一次真实收钱？', '上次接单为什么没继续？'] },
+  study: { label: '升学/考试型',
+    b: [{ t: '在职备考＋保收入', n: [] }, { t: '脱产全职备考', n: ['存款≥6 个月', '1 次完整模考'] }, { t: '换赛道申请（不赌一次考试）', n: [] }],
+    q: ['当年为什么先保住收入？', '你为考试投入过哪一次完整备考？', '上次换赛道卡在哪？'] },
+  retire: { label: '退休/再就业型',
+    b: [{ t: '顾问式半退休', n: [] }, { t: '重资产再创业', n: ['存款≥6 个月', '1 次真实试营业'] }, { t: '社区小生意或志愿', n: [] }],
+    q: ['退休后为什么先停下来？', '你退休后做过哪次真实试水？', '上次小生意为什么没成？'] },
+  return: { label: '回国/迁移型',
+    b: [{ t: '远程保留现职＋回国试水', n: [] }, { t: '裸辞回国 all-in', n: ['存款≥6 个月', '1 次真实 offer'] }, { t: '先拿 offer 再迁移', n: [] }],
+    q: ['为什么先留在现职？', '你为回国投过哪次简历/面试？', '上次迁移卡在哪？'] },
+  general: { label: '通用型',
+    b: [{ t: '主业保底＋副业轻试错', n: [] }, { t: '裸辞/全职创业', n: ['存款≥6 个月', '1 次预售成交'] }, { t: '内部转岗做流程/效率', n: [] }],
+    q: ['当年为什么留在主业？', '你为裸辞做过哪一次真实尝试？', '上次转岗/换组为什么没成？'] }
+};
+const SCORE_RULES = {
+  business: /开店|扩店|创业|加盟|做生意|盘下|铺面|餐馆|面馆|饭馆|超市|退学|卖货|流水|营业额|GMV/,
+  side: /副业|兼职|接单|自媒体|公众号|小红书|带货|接私活|自由职业|自由设计师/,
+  study: /考研|考编|考公|留学|学历|大专|本科|考试|考证|护师|MBA/,
+  retire: /退休|内退|返聘|养老/,
+  return: /回国|海外|新加坡|跨时区|localisation|履历/,
+  switch: /转行|换行|裸辞|跳槽|转岗|辞职|辞了|离职|重返|复出|回职场|行业下行|行业没了|跨行|转医美|脱节|回不去/
+};
+// 2026-11-11：按命中计分，Q12–Q15（最紧约束/最怕/资源/失败）双倍权重；同分按 business→side→study→retire→return→switch
+function detectScenario(v) {
+  const ORDER = ['business', 'side', 'study', 'retire', 'return', 'switch'];
+  const score = {};
+  ORDER.forEach(function (k) { score[k] = 0; });
+  v.forEach(function (ans, i) {
+    const w = i >= 11 ? 2 : 1;
+    ORDER.forEach(function (k) {
+      const m = String(ans).match(new RegExp(SCORE_RULES[k].source, 'g'));
+      if (m) { score[k] += m.length * w; }
+    });
+  });
+  let best = 'general'; let bestN = 0;
+  ORDER.forEach(function (k) { if (score[k] > bestN) { best = k; bestN = score[k]; } });
+  return best;
+}
+
 function build(answers, opts) {
   const o = opts || {};
   const a = list(answers);
@@ -90,22 +140,24 @@ function build(answers, opts) {
     nodes.push({ id: 'S-00' + (4 + i), kind: 'skill', text: d.text, quote: null, happened_on: null, source: 'interview', epistemic: 'inferred', confidence: 0.6, derived_from: d.from });
   });
 
+  const scen = SCENARIOS[detectScenario(v)] || SCENARIOS.general;
   const branches = [
-    { id: 'B-01', title: '主业保底＋副业轻试错', unlocked: true, needs: [], parent: null },
-    { id: 'B-02', title: '裸辞/全职创业', unlocked: false, needs: ['存款≥6 个月', '1 次预售成交'], parent: 'B-01' },
-    { id: 'B-03', title: '内部转岗做流程/效率', unlocked: true, needs: [], parent: 'B-01' }
+    { id: 'B-01', title: scen.b[0].t, unlocked: true, needs: scen.b[0].n, parent: null },
+    { id: 'B-02', title: scen.b[1].t, unlocked: false, needs: scen.b[1].n, parent: 'B-01' },
+    { id: 'B-03', title: scen.b[2].t, unlocked: true, needs: scen.b[2].n, parent: 'B-01' }
   ];
   const locked = branches.filter(function (b) { return !b.unlocked; });
   const diagnosis = { branches: {
-    'B-01': { attempts: [true], question: '当年为什么留在主业？' },
-    'B-02': { attempts: [false, false], question: '你为裸辞做过哪一次真实尝试？' },
-    'B-03': { attempts: [false, true], question: '上次转岗/换组为什么没成？' }
+    'B-01': { attempts: [true], question: scen.q[0] },
+    'B-02': { attempts: [false, false], question: scen.q[1] },
+    'B-03': { attempts: [false, true], question: scen.q[2] }
   } };
   const model = {
     status: 'ok', schemaVersion: 2,
     person: { alias: alias, interviewed_at: today },
+    scenario: { key: detectScenario(v), label: scen.label },
     nodes: nodes, branches: branches, hidden_skills: [{ text: '隐藏技能：' + short(v[8], 12) + ' × ' + short(v[9], 12), derived_from: ['S-001', 'S-002'], verify_questions: ['这件事你最享受的是解决问题，还是被人需要？', '如果没人看见，你还会做吗？', '上一次做到最好时，你具体做了什么？'] }],
-    refusals: locked.map(function (b) { return b.id + ' 已被财务红线锁定：先补存款与一次真实成交'; }),
+    refusals: locked.map(function (b) { return b.id + ' 已被财务红线锁定：先补存款与一次真实成交（' + (b.needs || []).join('、') + '）'; }),
     diagnosis: diagnosis
   };
 

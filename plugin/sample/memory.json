@@ -1,0 +1,164 @@
+{
+ "schemaVersion": 2,
+ "person": {
+  "alias": "U-DEMO-001",
+  "interviewed_at": "2026-11-04"
+ },
+ "built_at": "2026-11-05",
+ "layers": {
+  "L1": [
+   {
+    "id": "L1-001",
+    "text": "为社团协调 100 人场地",
+    "quote": "去年十月帮社团协调了个一百人的场地，还在预算内",
+    "happened_on": "2025-10",
+    "source": "interview",
+    "deleted": false,
+    "original_hash": "e0c4432c3871edc8a2479152a4f1edddd87c3c06",
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z",
+    "from": [],
+    "lostSource": false,
+    "lostFrom": []
+   },
+   {
+    "id": "L1-002",
+    "text": "两周理清部门三年乱账",
+    "quote": "把部门三年的乱账在两周内理清了",
+    "happened_on": "2025-06",
+    "source": "interview",
+    "deleted": false,
+    "original_hash": "842e01b68d0690370f5e49527771aed50fe5cc1b",
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z",
+    "from": [],
+    "lostSource": false,
+    "lostFrom": []
+   },
+   {
+    "id": "L1-003",
+    "text": "帮同事修电脑被人记住",
+    "quote": "同事老是找我修电脑，说我比 IT 快",
+    "happened_on": null,
+    "source": "interview",
+    "deleted": false,
+    "original_hash": "e5cc20dea1516c824e1196dd5bce61d96928baf4",
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z",
+    "from": [],
+    "lostSource": false,
+    "lostFrom": []
+   },
+   {
+    "id": "L1-004",
+    "text": "大学社团外联拉过一次赞助",
+    "quote": "大学做社团外联，拉到过一家奶茶店的三千块",
+    "happened_on": "2016-09",
+    "source": "interview",
+    "deleted": false,
+    "original_hash": "03a7cf0701bb59ba185d9dd5e50e73d9c2644a02",
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z",
+    "from": [],
+    "lostSource": false,
+    "lostFrom": []
+   },
+   {
+    "id": "L1-005",
+    "text": "整理模板被全组复用",
+    "quote": "我做的周报模板，后来全组都在用",
+    "happened_on": null,
+    "source": "interview",
+    "deleted": false,
+    "original_hash": "d024a7394f983efced0320840f7ac8c689e8585d",
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z",
+    "from": [],
+    "lostSource": false,
+    "lostFrom": []
+   }
+  ],
+  "L2": [
+   {
+    "id": "L2-001",
+    "text": "能把混乱结构化：三年乱账与周报模板指着同一种能力",
+    "from": [
+     "L1-002",
+     "L1-005"
+    ],
+    "deleted": false,
+    "lostSource": false,
+    "lostFrom": [],
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z"
+   },
+   {
+    "id": "L2-002",
+    "text": "靠小工具与协调拿到信任，不是靠职级",
+    "from": [
+     "L1-001",
+     "L1-003"
+    ],
+    "deleted": false,
+    "lostSource": false,
+    "lostFrom": [],
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z"
+   },
+   {
+    "id": "L2-003",
+    "text": "对外谈判有手感，但样本只有一次",
+    "from": [
+     "L1-004",
+     "L1-001"
+    ],
+    "deleted": false,
+    "lostSource": false,
+    "lostFrom": [],
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z"
+   }
+  ],
+  "L3": [
+   {
+    "id": "L3-001",
+    "text": "系统认为你最稳的是「把混乱结构化」，其次是被信任的技术支持",
+    "from": [
+     "L2-001",
+     "L2-002"
+    ],
+    "deleted": false,
+    "lostSource": false,
+    "lostFrom": [],
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z"
+   },
+   {
+    "id": "L3-002",
+    "text": "隐藏技能：技术支持 × 跨部门沟通（修电脑＋协调场地）",
+    "from": [
+     "L2-002",
+     "L2-001"
+    ],
+    "deleted": false,
+    "lostSource": false,
+    "lostFrom": [],
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z"
+   },
+   {
+    "id": "L3-003",
+    "text": "短板：对外谈判只出现过一次，不能当主能力",
+    "from": [
+     "L2-003",
+     "L2-001"
+    ],
+    "deleted": false,
+    "lostSource": false,
+    "lostFrom": [],
+    "edited": false,
+    "created_at": "2026-11-05T00:00:00.000Z"
+   }
+  ]
+ }
+}

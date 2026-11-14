@@ -1,6 +1,6 @@
 /* offer.js - 商品页文案（纯函数）：价格三档 + 前 50 名承诺按销量隐藏 */
 'use strict';
-const PRICE = { original: 129, intro: 99, friend: 0 };
+const PRICE = { original: 99, intro: 69, friend: 0 }; // 2026-11-10 老板拍板：定价 99／推广价 69（2026-12-01 前）
 const PROMISE_LIMIT = 50;
 
 function promiseVisible(sold) { return Number(sold || 0) < PROMISE_LIMIT; }
@@ -19,8 +19,8 @@ function buildOffer(opts) {
     '',
     '| 档 | 价格 | 说明 |',
     '|---|---|---|',
-    '| 原价 | **¥' + (o.original || PRICE.original) + '** | 买断，永久更新 |',
-    '| 内测价 | **¥' + (o.intro || PRICE.intro) + '** | 前 50 名 |',
+    '| 定价 | **¥' + (o.original || PRICE.original) + '** | 买断，永久更新 |',
+    '| 推广价 | **¥' + (o.intro || PRICE.intro) + '** | 2026-12-01 前有效 |',
     '| 熟人 | 免费 | 私聊我拿码 |',
     ''
   ];

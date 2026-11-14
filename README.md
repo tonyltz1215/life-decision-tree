@@ -32,9 +32,20 @@ Community directory listing: pending review. 社区商店收录：审核中。
 - No account is required, no telemetry, no ads. 不需要账号、无遥测、无广告。
 - Data stays under your vault's `.ldt/` folder; *delete my data* wipes it after a backup. 数据在库目录 `.ldt/`，可一键删除（先备份）。
 
+## Disclaimer · 免责声明
+
+**本工具仅辅助整理职业选择信息，不提供专业心理评估、心理咨询、心理治疗或精神障碍诊断、治疗，也不构成医疗、投资或法律意见。**
+
+This tool only helps you organize information about career options. It does **not** provide psychological assessment, counseling, psychotherapy, or diagnosis/treatment of mental disorders, and is **not** medical, investment, or legal advice.
+
+- 它不预测结果、不承诺收益；所有判断只基于你自己写下的信息和你自己的证据。
+- 你的数据只保存在你自己的电脑上（`.ldt/`），我们看不到、不会上传、不会用于训练；但能访问这台电脑的其他人可以读到这些文件。
+- 如果你开启可选的 AI 增强，那段数据会离开你的电脑，由你和所选的 AI 厂商之间处理。
+- 涉及健康、财务或法律问题时，请咨询相应专业人士。
+
 ## Privacy · 隐私
 
-Everything is read/written locally. Export runs a redaction pass (phone / email / ID numbers) before producing a file. The plugin never opens files outside your vault.
+Everything is read/written locally. Export runs a redaction pass (phone / email / ID numbers) before producing a file. The plugin never opens files outside your vault. 本地存储不等于我们「不处理个人信息」：存什么、留多久由你决定，我们看不到也不决定用途；不想留的字段（如财务数字）可以留空。
 
 ## Support · 支持
 

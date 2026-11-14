@@ -6,7 +6,7 @@
 'use strict';
 const POLICY_VERSION = 'v1-20261105';
 const PII_KINDS = [
-  { kind: '手机号', re: /1[3-9]\d{9}/g },
+  { kind: '手机号', re: /(?<!\d)1[3-9]\d{9}(?!\d)/g },
   { kind: '邮箱', re: /[\w.+-]+@[\w-]+\.[\w.]{2,}/g },
   { kind: '身份证', re: /\b\d{17}[\dXx]\b/g },
   { kind: '密钥', re: /\b(sk-[A-Za-z0-9]{8,}|SB-[A-Fa-f0-9]{16,})\b/g }
@@ -49,7 +49,10 @@ function walk(node, path, out) {
   }
   if (typeof node === 'number' || typeof node === 'boolean') { return; }
   if (Array.isArray(node)) { node.forEach(function (v, i) { walk(v, path + '[' + i + ']', out); }); return; }
-  Object.keys(node).forEach(function (k) { walk(node[k], path + '.' + k, out); });
+  Object.keys(node).forEach(function (k) {
+    if (/hash$/i.test(k)) { return; }
+    walk(node[k], path + '.' + k, out);
+  });
 }
 
 function piiScan(obj) { const out = []; walk(obj, '$', out); return out; }
@@ -64,7 +67,7 @@ function redactDeep(node) {
   if (Array.isArray(node)) { return node.map(redactDeep); }
   if (typeof node === 'object') {
     const o = {};
-    Object.keys(node).forEach(function (k) { o[k] = redactDeep(node[k]); });
+    Object.keys(node).forEach(function (k) { o[k] = /hash$/i.test(k) ? node[k] : redactDeep(node[k]); });
     return o;
   }
   return node;

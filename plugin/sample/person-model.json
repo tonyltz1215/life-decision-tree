@@ -1,0 +1,248 @@
+{
+ "status": "ok",
+ "person": {
+  "alias": "U-DEMO-001",
+  "interviewed_at": "2026-11-04"
+ },
+ "nodes": [
+  {
+   "id": "E-001",
+   "kind": "evidence",
+   "text": "为社团协调 100 人场地",
+   "quote": "去年十月帮社团协调了个一百人的场地，还在预算内",
+   "happened_on": "2025-10",
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 1
+  },
+  {
+   "id": "E-002",
+   "kind": "evidence",
+   "text": "两周理清部门三年乱账",
+   "quote": "把部门三年的乱账在两周内理清了",
+   "happened_on": "2025-06",
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 1
+  },
+  {
+   "id": "E-003",
+   "kind": "evidence",
+   "text": "帮同事修电脑被人记住",
+   "quote": "同事老是找我修电脑，说我比 IT 快",
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 0.9
+  },
+  {
+   "id": "E-004",
+   "kind": "evidence",
+   "text": "大学社团外联拉过一次赞助",
+   "quote": "大学做社团外联，拉到过一家奶茶店的三千块",
+   "happened_on": "2016-09",
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 0.9
+  },
+  {
+   "id": "E-005",
+   "kind": "evidence",
+   "text": "整理模板被全组复用",
+   "quote": "我做的周报模板，后来全组都在用",
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 0.8
+  },
+  {
+   "id": "S-001",
+   "kind": "skill",
+   "text": "跨部门协调",
+   "quote": null,
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "inferred",
+   "confidence": 0.7,
+   "derived_from": [
+    "E-001"
+   ]
+  },
+  {
+   "id": "S-002",
+   "kind": "skill",
+   "text": "把混乱结构化",
+   "quote": null,
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "inferred",
+   "confidence": 0.8,
+   "derived_from": [
+    "E-002",
+    "E-005"
+   ]
+  },
+  {
+   "id": "S-003",
+   "kind": "skill",
+   "text": "技术支持与被信任",
+   "quote": null,
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "inferred",
+   "confidence": 0.6,
+   "derived_from": [
+    "E-003"
+   ]
+  },
+  {
+   "id": "S-004",
+   "kind": "skill",
+   "text": "对外谈判",
+   "quote": null,
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "inferred",
+   "confidence": 0.5,
+   "derived_from": [
+    "E-004"
+   ]
+  },
+  {
+   "id": "R-001",
+   "kind": "risk",
+   "text": "存款仅够 2 个月",
+   "quote": "大概两个月吧，房贷每月七千",
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "redline",
+   "confidence": 1
+  },
+  {
+   "id": "R-002",
+   "kind": "risk",
+   "text": "家里反对裸辞",
+   "quote": "我妈说你要敢辞就别回家",
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 0.9
+  },
+  {
+   "id": "R-003",
+   "kind": "risk",
+   "text": "被打断即放弃",
+   "quote": "我一被打断就不想做了",
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 0.7
+  },
+  {
+   "id": "P-001",
+   "kind": "resource",
+   "text": "每周 6 小时可支配",
+   "quote": "周中晚上两小时，周末四小时",
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 1
+  },
+  {
+   "id": "P-002",
+   "kind": "resource",
+   "text": "可复用模板库",
+   "quote": "我攒了一堆周报、复盘模板",
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 0.9
+  },
+  {
+   "id": "P-003",
+   "kind": "resource",
+   "text": "一个可打开机会的人",
+   "quote": "我表哥在做企业服务，认识不少老板",
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 0.8
+  },
+  {
+   "id": "V-001",
+   "kind": "skill",
+   "text": "三年后想被描述成把复杂讲清楚的人",
+   "quote": "希望别人说我这人能把复杂的事讲明白",
+   "happened_on": null,
+   "source": "interview",
+   "epistemic": "fact",
+   "confidence": 0.8
+  }
+ ],
+ "hidden_skills": [
+  {
+   "text": "技术支持×跨部门沟通（修电脑+协调场地）",
+   "derived_from": [
+    "E-001",
+    "E-003"
+   ],
+   "verify_questions": [
+    "你有没有在没权限的情况下推动过别人配合？",
+    "别人找你修电脑时，你更享受解决问题还是被需要？",
+    "上次协调场地时，你用了什么办法让对方让步？"
+   ]
+  }
+ ],
+ "branches": [
+  {
+   "id": "B-01",
+   "title": "主业保底＋副业轻试错",
+   "unlocked": true,
+   "needs": []
+  },
+  {
+   "id": "B-02",
+   "title": "裸辞/全职创业",
+   "unlocked": false,
+   "needs": [
+    "存款≥6 个月",
+    "1 次预售成交"
+   ],
+   "parent": "B-01"
+  },
+  {
+   "id": "B-03",
+   "title": "内部转岗做流程/效率",
+   "unlocked": true,
+   "needs": [],
+   "parent": "B-01"
+  }
+ ],
+ "refusals": [
+  "B-02 已被财务红线锁定：存款 2 个月 < 6 个月门槛"
+ ],
+ "diagnosis": {
+  "branches": {
+   "B-01": {
+    "attempts": [
+     true
+    ],
+    "question": "当年为什么留在主业？"
+   },
+   "B-02": {
+    "attempts": [
+     false,
+     false
+    ],
+    "question": "当年为什么选这个专业？"
+   },
+   "B-03": {
+    "attempts": [
+     false,
+     true
+    ],
+    "question": "上次转岗为什么没成？"
+   }
+  }
+ }
+}

@@ -3,7 +3,7 @@
  * 未解锁分支带 needs；refusals 里点到 id 的分支挂熔断（只用已有字段，不改数据模型）
  */
 'use strict';
-const COLORS = { fact: '#3b82f6', inferred: '#eab308', redline: '#ef4444' };
+const COLORS = { fact: '#5aa9ff', inferred: '#ffb020', redline: '#ff5d5d' };
 const KIND = { skill: '能力', evidence: '证据', risk: '风险', resource: '资源' };
 const DISCLAIMER = '不提供心理诊断、不保证转行成功、只做沙盘推演';
 const REFUSE = '数据不足，再给 2 个具体案例（时间＋做了什么＋结果）';
@@ -59,8 +59,9 @@ function buildTreeHtml(model) {
   const m = model || {};
   const t = res.stats;
   const fuse = fuseOf(m);
-  const cards = (m.nodes || []).map((n) => '<div class="ldt-card" data-ep="' + esc(n.epistemic) + '">'
-    + '<div class="ldt-k">' + (KIND[n.kind] || n.kind) + ' · ' + esc(n.id) + ' · ' + esc(n.epistemic) + '</div>'
+  const cards = (m.nodes || []).map((n) => '<div class="ldt-card" data-ep="' + esc(n.epistemic) + '" data-node="' + esc(n.id) + '" title="双击改这一条">'
+    + '<div class="ldt-k">' + (KIND[n.kind] || n.kind) + ' · ' + esc(n.id) + ' · ' + esc(n.epistemic)
+    + '<span class="ldt-op ldt-card-edit" data-act="node-edit" data-node="' + esc(n.id) + '" title="改这一条" style="float:right;cursor:pointer">✎</span></div>'
     + '<div class="ldt-t">' + esc(n.text) + '</div>'
     + (n.quote ? '<div class="ldt-q">「' + esc(n.quote) + '」</div>' : '') + '</div>').join('');
   const branches = (m.branches || []).map((b) => '<div class="ldt-branch ' + (b.unlocked ? 'on' : 'off') + (fuse[b.id] ? ' fuse' : '') + (b.diag ? ' ' + esc(b.diag.cls) : '') + '">'
@@ -71,7 +72,7 @@ function buildTreeHtml(model) {
     + (b.diag && b.diag.verify ? '<div class="ldt-verify">' + esc(b.diag.verify) + '</div>' : '')
     + (b.diag && b.diag.repair && b.diag.repair.length ? '<div class="ldt-repair">补强清单：' + esc(b.diag.repair.join('；')) + '</div>' : '')
     + (b.diag && b.diag.trace && b.diag.trace.length > 1 ? '<div class="ldt-trace">追先修：' + esc(b.diag.trace.join(' → ')) + '</div>' : '')
-    + (b.unlocked ? '' : '<div class="ldt-needs">需要：' + esc((b.needs || []).join('；')) + '</div>')
+    + (b.unlocked ? '' : '<div class="ldt-needs">还差 ' + ((b.needs || []).length || 1) + ' 项 · 需要：' + esc((b.needs || []).join('；') || '条件未写') + '</div>')
     + (fuse[b.id] ? '<div class="ldt-fuse">⚡ ' + esc(fuse[b.id]) + '</div>' : '') + '</div>').join('');
   const hidden = (m.hidden_skills || []).map((h) => '<div class="ldt-hidden"><b>隐藏技能：</b>' + esc(h.text)
     + '<ol>' + (h.verify_questions || []).map((q) => '<li>' + esc(q) + '</li>').join('') + '</ol></div>').join('');

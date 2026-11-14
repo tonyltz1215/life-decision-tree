@@ -1,0 +1,42 @@
+{
+  "mode": "increment",
+  "skills": [
+    {
+      "id": "sk-review",
+      "name": "复盘会脚本",
+      "domain": [
+        "管理/统筹",
+        "内容/表达"
+      ],
+      "type": "能力",
+      "evidence": [
+        "连续两次复盘会录音转写"
+      ],
+      "level": 2,
+      "upgrade_condition": "再跑一次并留下转写稿",
+      "status": "verified",
+      "source": "interview"
+    }
+  ],
+  "levels": [
+    {
+      "id": "lv-pmf",
+      "title": "0→1 验证 PMF",
+      "condition": "获得第一笔真实收入",
+      "gate_type": "验证型",
+      "status": "done",
+      "kind": "main",
+      "ui_copy": {
+        "amount_text": "金额由 AI 按你的处境生成"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "id": "rt-9",
+      "from": "lv-pmf",
+      "to": "lv-stable",
+      "trigger": "成交 3 单"
+    }
+  ]
+}
